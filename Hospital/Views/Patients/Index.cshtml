@@ -1,0 +1,54 @@
+﻿@model IList<Hospital.Models.Patient>
+@{
+    ViewBag.Title = "Patients";
+}
+@Scripts.Render("~/bundles/patients-behaivour")
+<div class="row" style="padding-bottom: 15px; padding-top: 15px;">
+    <div class="col col-md-offset-8">
+        @using (Html.BeginForm("IndexSort", "Patients"))
+        {
+            <input type="search" class="form-control" name="filter" style="float: left" value="@(ViewBag.Filter != null ? ViewBag.Filter : "")">
+            <input class="btn btn-primary" type="submit" value="Search" style="float: right" />
+        }
+    </div>
+</div>
+<div class="row" style="padding-bottom: 15px; padding-top: 15px;">
+    <div class="col col-md-offset-8 text-right">
+        <a class="btn btn-primary" href='@Url.Action("Add", "Patients")'>Add new</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-md-10 col-md-offset-1">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>@Html.ActionLink("Id", "IndexSort", new { orderBy = "Id", filter = ViewBag.Filter })</th>
+                <th>@Html.ActionLink("Surname", "IndexSort", new {orderBy = "Surname", filter = ViewBag.Filter})</th>
+                <th>@Html.ActionLink("Name", "IndexSort", new {orderBy = "Name", filter = ViewBag.Filter })</th>
+                <th>@Html.ActionLink("Second name", "IndexSort", new {orderBy = "Second name", filter = ViewBag.Filter })</th>
+                <th>Adress</th>
+                <th>@Html.ActionLink("Birth", "IndexSort", new {orderBy = "Birth", filter = ViewBag.Filter })</th>
+                <th>@Html.ActionLink("District", "IndexSort", new {orderBy = "District", filter = ViewBag.Filter })</th>
+                <th>In hospital</th>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                foreach (var patient in Model)
+                {
+                    <tr>
+                        <th>@patient.Id</th>
+                        <td>@patient.Surname</td>
+                        <td>@patient.Name</td>
+                        <td>@patient.SecondName</td>
+                        <td>@patient.Adress</td>
+                        <td>@patient.Birth.Value.ToString("yyyy MMMM dd")</td>
+                        <td>@patient.District.Title</td>
+                        <td>@(patient.PatientAccount.Count == 0 ? "No" : (patient.PatientAccount.First().DateEnd == null ? "Yes" : "No"))</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

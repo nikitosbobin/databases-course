@@ -1,0 +1,38 @@
+﻿@model Tuple<int, List<Hospital.Models.Department>, List<Hospital.Models.Complexity>, List<Hospital.Models.Disease>>
+@{
+    ViewBag.Title = $"Add new accounting for patient {Model.Item1}";
+}
+
+<div class="row">
+    <div class="col col-md-3 col-md-offset-4 text-right">
+        <form action="/Accounting/AddNewAccount" class="text-right">
+            <input class="form-control" name="patientId" value="@Model.Item1" style="margin-top: 25px;"/>
+            <select class="form-control" name="departmentId" style="margin-top: 25px;">
+                @{
+                    foreach (var department in Model.Item2)
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                }
+            </select>
+            <select class="form-control" name="diseaseId" style="margin-top: 25px;">
+                @{
+                    foreach (var disease in Model.Item4)
+                    {
+                        <option value="@disease.Id">@disease.Title</option>
+                    }
+                }
+            </select>
+            <select class="form-control" name="complexityId" style="margin-top: 25px;">
+                @{
+                    foreach (var complexity in Model.Item3)
+                    {
+                        <option value="@complexity.Id">@complexity.Title</option>
+                    }
+                }
+            </select>
+            <input class="btn btn-primary" type="submit" value="Add" style="margin-top: 25px;"/>
+        </form>
+    </div>
+</div>
+

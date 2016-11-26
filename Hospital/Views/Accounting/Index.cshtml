@@ -1,0 +1,48 @@
+﻿@model IList<Hospital.Models.PatientAccount>
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/bundles/accounting-behaivour")
+<div class="row" style="padding-bottom: 15px; padding-top: 15px;">
+    <div class="col col-md-offset-8">
+        @using (Html.BeginForm("IndexSort", "Accounting"))
+        {
+            <input type="search" class="form-control" name="filter" style="float: left" value="@(ViewBag.Filter != null ? ViewBag.Filter : "")">
+            <input class="btn btn-primary" type="submit" value="Search" style="float: right" />
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col col-md-10 col-md-offset-1">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.ActionLink("Id", "IndexSort", new { orderBy = "Id", filter = ViewBag.Filter })</th>
+                    <th>@Html.ActionLink("Patient id", "IndexSort", new { orderBy = "Patient id", filter = ViewBag.Filter })</th>
+                    <th>@Html.ActionLink("Depatment", "IndexSort", new { orderBy = "Depatment", filter = ViewBag.Filter })</th>
+                    <th>@Html.ActionLink("Complexity", "IndexSort", new { orderBy = "Complexity", filter = ViewBag.Filter })</th>
+                    <th>@Html.ActionLink("Disease", "IndexSort", new { orderBy = "Disease", filter = ViewBag.Filter })</th>
+                    <th>@Html.ActionLink("DateStart", "IndexSort", new { orderBy = "DateStart", filter = ViewBag.Filter })</th>
+                    <th>@Html.ActionLink("DateEnd", "IndexSort", new { orderBy = "DateEnd", filter = ViewBag.Filter })</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var account in Model)
+                    {
+                        <tr>
+                            <th>@account.Id</th>
+                            <td>@account.PatientId</td>
+                            <td>@account.Department.Name</td>
+                            <td>@account.Complexity.Title</td>
+                            <td>@account.Disease.Title</td>
+                            <td>@account.DateStart.Value.ToString("yyyy MMMM dd")</td>
+                            <td>@(account.DateEnd?.ToString("yyyy MMMM dd") ?? "none")</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

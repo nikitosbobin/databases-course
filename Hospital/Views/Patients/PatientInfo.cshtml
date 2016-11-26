@@ -1,0 +1,51 @@
+﻿@model Hospital.Models.Patient
+@{
+    ViewBag.Title = $"Patient {Model.Id}. {Model.Surname} {Model.Name}";
+}
+<script>
+    $(document).ready(function() {
+        $("#delete-patient").click(function() {
+            var del = confirm("Do toy really want to delete this patient with all his history?");
+            if (del === true) {
+                location.href = '/Patients/Delete?id=@Model.Id';
+            }
+        });
+    });
+</script>
+<div class="row">
+    <div class="col col-md-4">
+        <h2>@($"{Model.Surname} {Model.Name} {Model.SecondName}")</h2>
+        <h4>Age: @($"{DateTime.Now.Year - Model.Birth.Value.Year}") years</h4>
+        <h4>Adress: @Model.Adress</h4>
+        <h4>District: @Model.District.Title</h4>
+        <a class="btn btn-primary" href='/Accounting/AddNew?patientId=@Model.Id'>Add accounting</a><br/><br />
+        <button type="button" class="btn btn-danger" id="delete-patient">Delete</button>
+    </div>
+    @{
+        if (Model.PatientAccount.Count > 0)
+        {
+            <div class="col col-md-5 col-md-offset-2">
+                <h4>Diseases: @Model.PatientAccount.Count</h4>
+                <hr />
+                @{
+                    foreach (var account in Model.PatientAccount)
+                    {
+                        <h4>Disease: @account.Disease.Title</h4>
+                        <h4>Complexity: @account.Complexity.Title</h4>
+                        <h4>Start: @account.DateStart.Value.ToString("yyyy-MM-dd")</h4>
+                        <h4>End: @(account.DateEnd?.ToString("yyyy-MM-dd") ?? "none")</h4>
+                        <h4>Department: @account.Department.Name, head: @account.Department.Head</h4>
+                        if (!account.DateEnd.HasValue)
+                        {
+                            <a class="btn btn-primary" href='/Accounting/Discharge?accountId=@account.Id'>Discharge</a>
+                        }
+                        <hr />
+                    }
+                }
+            </div>
+        }
+    }
+</div>
+
+
+

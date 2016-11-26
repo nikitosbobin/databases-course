@@ -1,0 +1,26 @@
+﻿@model IList<Hospital.Models.District>
+@{
+    ViewBag.Title = "Add new patient";
+}
+
+<div class="row">
+    <div class="col col-md-3 col-md-offset-4">
+        <form action="/Patients/AddNewPatient" class="text-right">
+            <input type="text" class="form-control" name="surname" placeholder="Surname" style="margin-top: 25px;" />
+            <input type="text" class="form-control" name="name" placeholder="Name" style="margin-top: 25px;" />
+            <input type="text" class="form-control" name="secondName" placeholder="Second name" style="margin-top: 25px;" />
+            <input type="date" class="form-control" name="birth" placeholder="Birth" style="margin-top: 25px;" value="1970-01-01" />
+            <input type="text" class="form-control" name="adress" placeholder="Adress" style="margin-top: 25px;" />
+            <select class="form-control" name="districtId" style="margin-top: 25px;">
+                @{
+                    foreach (var district in Model)
+                    {
+                        <option value="@district.Id">@district.Title</option>
+                    }
+                }
+            </select>
+            <input class="btn btn-primary" type="submit" value="Add" style="margin-top: 25px;" />
+        </form>
+    </div>
+</div>
+
