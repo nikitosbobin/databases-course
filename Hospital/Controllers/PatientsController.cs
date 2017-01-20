@@ -59,11 +59,6 @@ namespace Hospital.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var patientAccounts = HospitalDb.GetEntities(x => x.PatientAccounts, s => s.Where(x => x.PatientId == id));
-            foreach (var patientAccount in patientAccounts)
-            {
-                HospitalDb.DeleteEntities(x => x.PatientAccounts, set => set.Where(s => s.Id == patientAccount.Id));
-            }
             HospitalDb.DeleteEntities(x => x.Patients, set => set.Where(s => s.Id == id));
             var patients = GetAllPatients();
             return View("index", patients);

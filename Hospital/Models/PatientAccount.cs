@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Core.Common.CommandTrees;
 
 namespace Hospital.Models
 {
